@@ -43,7 +43,7 @@ npm run ping
 If the pinger encounters an error while sending a request, it will log the error to the `error_log.txt `file and immediately attempt to ping the site again.
 
 ## Logs
-The pinger logs the response times of successful pings to the log/ping_log.txt file. Any errors encountered during pinging are logged to the error_log.txt file.
+The pinger logs the response times of successful pings to the `log/ping_log.txt` file. Any errors encountered during pinging are logged to the `error_log.txt` file.
 
 ## License
 This project is licensed under the MIT License.
