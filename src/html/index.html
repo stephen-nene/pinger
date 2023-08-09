@@ -4,50 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Viewer</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Additional custom styles can be added here */
-        body.dark-mode {
-            background-color: #121212;
-            color: #f4f800;
+        /* Add custom styles here */
+        .dark {
+            background-color: hsl(0, 0%, 0%);
+            color: #f7fafc;
+        }
+        .dark .label{
+            color: aliceblue;
+        }
+        .dark input{
+            background-color: hsl(218, 23%, 23%);
+            color: aliceblue;
+        }
+        .dark #logsContent{
+            background-color: hsl(218, 23%, 23%);
+            color: aliceblue;
         }
     </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-800">
+    <div class="container mx-auto py-10">
+        <h1 class="text-2xl font-semibold text-center mb-4">Log Viewer</h1>
+        <div class="flex space-x-2 justify-center mb-4">
+            <button onclick="viewLogs()" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300">View Logs</button>
+            <button onclick="viewErrors()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300">View Errors</button>
+            <button onclick="toggleDarkMode()" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">Toggle Dark Mode</button>
+        </div>
+        <div id="logsSection" class="hidden">
+            <div class="mb-4">
+                <label for="searchLogs" class="label block text-sm font-medium text-gray-700 dark:text-white-300">Search Logs:</label>
+                <input type="text" id="searchLogs" class="mt-1 p-2 border rounded w-full" placeholder="Search..." oninput="filterLogs()">
+            </div>
+            <pre id="logsContent" class="bg-white dark:bg-gray-700 p-4 rounded overflow-auto max-h-96"></pre>
+        </div>
+    </div>
+
     <script>
-        function viewLogs() {
-            fetch('/logs')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('log-content').textContent = data;
-                });
+        async function fetchLogs(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.text();
+                return data;
+            } catch (error) {
+                console.error('Error fetching logs:', error);
+                return 'Error fetching logs';
+            }
         }
 
-        function viewErrors() {
-            fetch('/errors')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('log-content').textContent = data;
-                });
+        async function viewLogs() {
+            const logsContent = document.getElementById('logsContent');
+            const logs = await fetchLogs('/logs');
+            logsContent.textContent = logs;
+            logsSection.style.display = 'block';
+        }
+
+        async function viewErrors() {
+            const logsContent = document.getElementById('logsContent');
+            const errors = await fetchLogs('/errors');
+            logsContent.textContent = errors;
+            logsSection.style.display = 'block';
         }
 
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            document.getElementsByTagName('div').classList.toggle('dark-mode');
+        document.body.classList.toggle('dark');
+        const darkModeButton = document.querySelector('#darkModeButton');
+        if (document.body.classList.contains('dark')) {
+            darkModeButton.textContent = 'Light Mode';
+        } else {
+            darkModeButton.textContent = 'Dark Mode';
+        }
+    }
+
+        function filterLogs() {
+            const logsContent = document.getElementById('logsContent');
+            const searchInput = document.getElementById('searchLogs');
+            const logsText = logsContent.textContent.toLowerCase();
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm.trim() === '') {
+                logsContent.textContent = logsText;
+            } else {
+                const filteredLogs = logsText
+                    .split('\n')
+                    .filter(line => line.toLowerCase().includes(searchTerm))
+                    .join('\n');
+                logsContent.textContent = filteredLogs;
+            }
         }
     </script>
-</head>
-<body>
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-4">Log Viewer</h1>
-        <div class="flex mb-4">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mr-2" onclick="viewLogs()">View Logs</button>
-            <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2" onclick="viewErrors()">View Errors</button>
-            <button class="ml-auto bg-gray-700 hover:bg-gray-800 text-white px-4 py-2" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-        </div>
-        <div class="dark-mode bg-white p-4 rounded-lg shadow-lg">
-            <h2 class="text-xl font-bold mb-2">Log Content</h2>
-            <input id="search" type="text" class="border p-2 mb-2 w-full" placeholder="Search logs...">
-            <!-- <pre id="log-content" class="dark-mode"></pre> -->
-        </div>
-    </div>
 </body>
 </html>

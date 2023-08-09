@@ -1,24 +1,2 @@
-Site pinged at 08/08/23 at 23:20:48 and response took 509ms
-Site pinged at 09/08/23 at 07:31:33 and response took 865ms
-Site pinged at 09/08/23 at 07:32:02 and response took 442ms
-Site pinged at 09/08/23 at 07:33:40 and response took 786ms
-Site pinged at 09/08/23 at 07:33:49 and response took 794ms
-Site pinged at 09/08/23 at 07:34:24 and response took 632ms
-Site pinged at 09/08/23 at 07:35:17 and response took 792ms
-Site pinged at 09/08/23 at 07:38:31 and response took 925ms
-Site pinged at 09/08/23 at 07:38:34 and response took 431ms
-Site pinged at 09/08/23 at 07:38:36 and response took 799ms
-Site pinged at 09/08/23 at 07:38:38 and response took 440ms
-Site pinged at 09/08/23 at 07:38:41 and response took 442ms
-Site pinged at 09/08/23 at 07:41:48 and response took 778ms
-Site pinged at 09/08/23 at 07:42:23 and response took 777ms
-Site pinged at 09/08/23 at 07:42:25 and response took 798ms
-Site pinged at 09/08/23 at 07:42:29 and response took 423ms
-Site pinged at 09/08/23 at 07:43:33 and response took 860ms
-Site pinged at 09/08/23 at 07:43:39 and response took 785ms
-Site pinged at 09/08/23 at 07:46:38 and response took 771ms
-Site pinged at 09/08/23 at 07:54:18 and response took 907ms
-Site pinged at 09/08/23 at 07:55:09 and response took 449ms
-Site pinged at 09/08/23 at 08:05:09 and response took 803ms
-Site pinged at 09/08/23 at 08:15:09 and response took 475ms
+
 Site pinged at Wednesday 09/08/23 at 08:17:33 and response took 933ms
