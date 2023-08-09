@@ -4,8 +4,8 @@
   "description": "pings a site",
   "main": "test.js",
   "scripts": {
-    "ping": "nodemon index.js",
-    "ping2": "nodemon test.js",
+    "ping": "nodemon src/index.js",
+    "ping2": "nodemon src/index2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

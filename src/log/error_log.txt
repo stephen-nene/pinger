@@ -1,0 +1,7 @@
+Error pinging site at 09/08/23 at 07:35:07: FetchError: request to https://mnetimall.onender.com/ failed, reason: getaddrinfo ENOTFOUND mnetimall.onender.com
+Error pinging site at 09/08/23 at 07:44:28: FetchError: request to https://mnetimall.onrender.com/ failed, reason: connect EHOSTUNREACH 216.24.57.253:443
+Error pinging site at 09/08/23 at 07:45:47: FetchError: request to https://mnetimall.onrender.com/ failed, reason: connect EHOSTUNREACH 216.24.57.253:443
+Error pinging site at 09/08/23 at 07:46:07: FetchError: request to https://mnetimall.onrender.com/ failed, reason: getaddrinfo EAI_AGAIN mnetimall.onrender.com
+Error pinging site at 09/08/23 at 07:46:27: FetchError: request to https://mnetimall.onrender.com/ failed, reason: getaddrinfo EAI_AGAIN mnetimall.onrender.com
+Error pinging site at 09/08/23 at 07:46:37: FetchError: request to https://mnetimall.onrender.com/ failed, reason: getaddrinfo EAI_AGAIN mnetimall.onrender.com
+Error pinging site at 09/08/23 at 07:48:10: FetchError: request to https://mnetimall.onrender.com/ failed, reason: getaddrinfo EAI_AGAIN mnetimall.onrender.com

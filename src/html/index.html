@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles can be added here */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f4f800;
+        }
+    </style>
+    <script>
+        function viewLogs() {
+            fetch('/logs')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('log-content').textContent = data;
+                });
+        }
+
+        function viewErrors() {
+            fetch('/errors')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('log-content').textContent = data;
+                });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            document.getElementsByTagName('div').classList.toggle('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-4">Log Viewer</h1>
+        <div class="flex mb-4">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mr-2" onclick="viewLogs()">View Logs</button>
+            <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2" onclick="viewErrors()">View Errors</button>
+            <button class="ml-auto bg-gray-700 hover:bg-gray-800 text-white px-4 py-2" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        </div>
+        <div class="dark-mode bg-white p-4 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-2">Log Content</h2>
+            <input id="search" type="text" class="border p-2 mb-2 w-full" placeholder="Search logs...">
+            <!-- <pre id="log-content" class="dark-mode"></pre> -->
+        </div>
+    </div>
+</body>
+</html>

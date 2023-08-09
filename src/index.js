@@ -1,13 +1,15 @@
 const fetch = require('isomorphic-fetch');
 const http = require('http');
 const fs = require('fs');
+const path = require('path');
 const { format } = require('date-fns');
 
 const siteUrl = 'https://mnetimall.onrender.com/'; // Replace with your site's URL
 const pingInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
 
-const logFilePath = 'log/ping_log.txt';
-const errorLogFilePath = 'error_log.txt'; // New error log file
+const logFilePath = path.join(__dirname, 'log', 'ping_log.txt');
+const errorLogFilePath = path.join(__dirname, 'log', 'error_log.txt');
+
 
 async function pingSite() {
   try {
@@ -19,7 +21,7 @@ async function pingSite() {
     const responseTime = endTime - startTime;
 
     const now = new Date();
-    const log = `Site pinged at ${format(now, 'dd/MM/yy')} at ${format(now, 'HH:mm:ss')} and response took ${responseTime}ms\n`;
+    const log = `Site pinged at ${format(now, 'EEEE dd/MM/yy')} at ${format(now, 'HH:mm:ss')} and response took ${responseTime}ms\n`;
     fs.appendFileSync(logFilePath, log);
 
     console.log(`Site pinged successfully. Response time: ${responseTime}ms`);
@@ -32,15 +34,46 @@ async function pingSite() {
     fs.appendFileSync(errorLogFilePath, errorLog);
 
     // Run the pinger again immediately in case of an error
-    pingSite();
+    // pingSite();
   }
 }
 
 // Create an HTTP server that responds to requests
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Server is running and pinging the site every 10 minutes.');
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    const indexPath = path.join(__dirname,'html', 'index.html');
+    fs.readFile(indexPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Internal Server Error');
+      } else {
+        res.end(data);
+      }
+    });
+  }else if (req.url === '/logs') {
+    const logFilePath = path.join(__dirname, 'log', 'ping_log.txt');
+    serveFile(res, logFilePath);
+  } else if (req.url === '/errors') {
+    const errorLogFilePath = path.join(__dirname, 'log', 'error_log.txt');
+    serveFile(res, errorLogFilePath);
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not Found');
+  }
 });
+
+function serveFile(res, filePath) {
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('Internal Server Error');
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end(data);
+    }
+  });
+}
 
 // Start the server on port 3000
 server.listen(3000, () => {
