@@ -2,3 +2,4 @@
 
 # Ignore all .txt files in the log directory
 src/log/*.txt
+*.sh
