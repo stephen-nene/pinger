@@ -43,7 +43,7 @@ async function pingSite() {
     fs.appendFileSync(errorLogFilePath, errorLog);
 
     // Run the pinger again immediately in case of an error
-    pingSite();
+    // pingSite();
   }
 }
 

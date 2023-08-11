@@ -3,7 +3,7 @@ pings a set site at a set interval
 
 # Pinger README
 
-This repository contains a simple pinger script written in Node.js that periodically sends requests to a specified URL and logs the results.
+This repository contains a simple pinger script written in Node.js that periodically sends requests to a specified URL and logs the results.ll
 
 ## Installation
 

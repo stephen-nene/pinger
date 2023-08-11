@@ -1,12 +1,6 @@
-# Logs
-# log
+/node_modules
 
+# Ignore all .txt files in the log directory
+src/log/*.txt
 
-
-node_modules
-dist
-dist-ssr
-*.local
-
-.space
-Spacefile
+# .env
