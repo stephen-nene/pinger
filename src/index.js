@@ -3,38 +3,47 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { format } = require('date-fns');
+const { utcToZonedTime } = require('date-fns-tz');
 
 const siteUrl = 'https://mnetimall.onrender.com/'; // Replace with your site's URL
-const pingInterval = 10 * 60 * 1000; // 10 minutes in milliseconds
+const pingInterval = 5 * 60 * 1000; // 10 minutes in milliseconds
 
 const logFilePath = path.join(__dirname, 'log', 'ping_log.txt');
 const errorLogFilePath = path.join(__dirname, 'log', 'error_log.txt');
 
+// Get the current time in the 'Africa/Nairobi' timezone (East African Time)
+function getCurrentTime() {
+  const now = new Date();
+  const timeZone = 'Africa/Nairobi';
+  const zonedTime = utcToZonedTime(now, timeZone);
+  return zonedTime;
+}
 
+// Function to ping the site
+console.log(`Pinging site ${siteUrl} at ${getCurrentTime()}...`);
 async function pingSite() {
   try {
-    console.log(`Pinging site ${siteUrl}...`);
+    const currentTime = getCurrentTime();
+
     const startTime = Date.now();
     const response = await fetch(siteUrl);
     const endTime = Date.now();
 
     const responseTime = endTime - startTime;
 
-    const now = new Date();
-    const log = `Site pinged at ${format(now, 'EEEE dd/MM/yy')} at ${format(now, 'HH:mm:ss')} and response took ${responseTime}ms\n`;
+    const log = `Site pinged at ${format(currentTime, 'EEEE dd/MM/yy')} at ${format(currentTime, 'HH:mm:ss')} and response took ${responseTime}ms\n`;
     fs.appendFileSync(logFilePath, log);
 
-    console.log(`Site pinged successfully. Response time: ${responseTime}ms`);
+    console.log(`Site pinged successfully at ${format(currentTime, 'HH:mm:ss')}. Response time: ${responseTime}ms`);
   } catch (error) {
     console.error('Error pinging site:', error);
 
-    // Log the error to the error log file
-    const now = new Date();
-    const errorLog = `Error pinging site at ${format(now, 'dd/MM/yy')} at ${format(now, 'HH:mm:ss')}: ${error}\n`;
+    const currentTime = getCurrentTime();
+    const errorLog = `Error pinging site at ${format(currentTime, 'dd/MM/yy')} at ${format(currentTime, 'HH:mm:ss')}: ${error}\n`;
     fs.appendFileSync(errorLogFilePath, errorLog);
 
     // Run the pinger again immediately in case of an error
-    // pingSite();
+    pingSite();
   }
 }
 

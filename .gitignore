@@ -8,4 +8,5 @@ dist
 dist-ssr
 *.local
 
-
+.space
+Spacefile
