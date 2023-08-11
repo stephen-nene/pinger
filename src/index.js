@@ -13,11 +13,9 @@ const errorLogFilePath = path.join(__dirname, 'log', 'error_log.txt');
 
 // Get the current time in the 'Africa/Nairobi' timezone (East African Time)
 function getCurrentTime() {
-  const now = new Date();
-  const timeZone = 'Africa/Nairobi';
-  const zonedTime = utcToZonedTime(now, timeZone);
-  return zonedTime;
+  return utcToZonedTime(new Date(), 'Africa/Nairobi');
 }
+
 
 // Function to ping the site
 console.log(`Pinging site ${siteUrl} at ${getCurrentTime()}...`);
